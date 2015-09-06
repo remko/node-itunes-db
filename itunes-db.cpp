@@ -224,8 +224,7 @@ NAN_METHOD(load) {
 }
 
 NAN_MODULE_INIT(InitAll) {
-	Nan::Set(target, Nan::New<String>("load").ToLocalChecked(),
-    Nan::GetFunction(Nan::New<FunctionTemplate>(load)).ToLocalChecked());
+	Nan::SetMethod(target, "load", load);
 }
 
 NODE_MODULE(itunes_db, InitAll)
