@@ -2,11 +2,20 @@
 
 An iTunes XML library database parser, designed for large libraries.
 
+
 ## Installation
 
     npm install itunes-db --save
 
-## Usage
+
+## Example
+
+    var itunesDB = require("itunes-db")
+        .loadSync("/Users/remko/Music/iTunes/iTunes Music Library.xml");
+
+    console.log("Tracks:", itunesDB.tracks);
+    console.log("Playlists:", itunesDB.playlists);
+
 
 ## API
 
