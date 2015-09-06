@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Major Version</key><integer>1</integer>
+	<key>Minor Version</key><integer>1</integer>
+	<key>Application Version</key><string>12.2.2.25</string>
+	<key>Date</key><date>2015-09-06T14:28:53Z</date>
+	<key>Features</key><integer>5</integer>
+	<key>Library Persistent ID</key><string>28AB8C5EA657EFF2</string>
+	<key>Tracks</key>
+	<dict>
+	</key>
+</dict>
