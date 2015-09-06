@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Major Version</key><integer>1</integer>
+	<key>Minor Version</key><integer>1</integer>
+	<key>Application Version</key><string>12.2.2.25</string>
+	<key>Date</key><date>2015-09-06T14:28:53Z</date>
+	<key>Features</key><integer>5</integer>
+	<key>Library Persistent ID</key><string>28AB8C5EA657EFF2</string>
+	<key>Tracks</key>
+	<dict>
+		<!-- Books -->
+		<key>198</key>
+		<dict>
+			<key>Track ID</key><integer>198</integer>
+			<key>Size</key><integer>69431296</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>Date Modified</key><date>2014-01-28T18:46:05Z</date>
+			<key>Date Added</key><date>2014-01-28T18:46:05Z</date>
+			<key>Release Date</key><date>2011-11-15T08:00:00Z</date>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>6DFD8156B49F7BEE</string>
+			<key>Track Type</key><string>File</string>
+			<key>Protected</key><true/>
+			<key>Purchased</key><true/>
+			<key>File Folder Count</key><integer>8</integer>
+			<key>Library Folder Count</key><integer>3</integer>
+			<key>Name</key><string>My Book</string>
+			<key>Artist</key><string>My Author</string>
+			<key>Genre</key><string>Food &#38; Drink</string>
+			<key>Kind</key><string>Protected book</string>
+			<key>Sort Name</key><string>My Book</string>
+			<key>Sort Artist</key><string>Author, My</string>
+			<key>Location</key><string>file://localhost/Users/remko/Library/Containers/com.apple.BKAgentService/Data/Documents/iBooks/Books/1234567.epub/</string>
+		</dict>
+
+		<!-- Videos -->
+		<key>242</key>
+		<dict>
+			<key>Track ID</key><integer>242</integer>
+			<key>Size</key><integer>1168941897</integer>
+			<key>Total Time</key><integer>5467200</integer>
+			<key>Date Modified</key><date>2012-03-09T11:57:22Z</date>
+			<key>Date Added</key><date>2015-08-09T14:02:16Z</date>
+			<key>Play Count</key><integer>1</integer>
+			<key>Play Date</key><integer>3515400873</integer>
+			<key>Play Date UTC</key><date>2015-05-25T10:14:33Z</date>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>40D33D627FC80B8C</string>
+			<key>Track Type</key><string>File</string>
+			<key>Has Video</key><true/>
+			<key>File Folder Count</key><integer>3</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+			<key>Name</key><string>My Movie</string>
+			<key>Kind</key><string>MPEG-4 video file</string>
+			<key>Location</key><string>file:///Users/remko/Music/iTunes/iTunes%20Media/Home%20Videos/My%20Movie.m4v</string>
+		</dict>
+	</dict>
+	<key>Playlists</key>
+	<array>
+		<dict>
+			<key>Playlist ID</key><integer>384</integer>
+			<key>Playlist Persistent ID</key><string>A271B1EB303C53A7</string>
+			<key>Distinguished Kind</key><integer>4</integer>
+			<key>Music</key><true/>
+			<key>All Items</key><true/>
+			<key>Name</key><string>Music</string>
+			<key>Smart Info</key>
+			<data>
+			AQEAAwAAAAIAAAAZAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			AAAAAA==
+			</data>
+			<key>Smart Criteria</key>
+			<data>
+			U0xzdAABAAEAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAQAAAAAAAAAAAAAAAAAAAAAAAAA
+			AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAQIbEAAAAAAAAAAAAAAAAAAAAB
+			AAAAAAAQIbEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AgAEAAAA
+			AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAIIAE
+			AAAAAAAAAAAAAAAAAAAAAQAAAAAAIIAEAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA
+			AAAAAAAA
+			</data>
+		</dict>
+		<dict>
+			<key>Playlist ID</key><integer>480</integer>
+			<key>Playlist Persistent ID</key><string>686952119EF3BAD5</string>
+			<key>Distinguished Kind</key><integer>50</integer>
+			<key>All Items</key><true/>
+			<key>Name</key><string>My Playlist</string>
+			<key>Playlist Items</key>
+			<array>
+				<dict>
+					<key>Track ID</key><integer>198</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>242</integer>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>Music Folder</key><string>file:///Users/remko/Music/iTunes/iTunes%20Media/</string>
+</dict>
+</plist>

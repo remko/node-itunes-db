@@ -1,0 +1,30 @@
+{
+  "name": "itunes-db",
+  "version": "0.1.0",
+  "description": "Fast iTunes XML parser",
+  "main": "index.js",
+  "author": "Remko Tronçon <remko@el-tramo.be> (https://el-tramo.be/)",
+  "license": "MIT",
+  "homepage": "https://el-tramo.be/node-itunes-db",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remko/node-itunes-db"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "eslint": "^0.24.0",
+    "eslint-config-remko": "^1.0.3",
+    "faucet": "0.0.1",
+    "ghooks": "^0.3.0",
+    "istanbul": "~0.3.0",
+    "tape": "^4.2.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "./node_modules/.bin/eslint ."
+    }
+  },
+  "dependencies": {
+    "nan": "^2.0.8"
+  }
+}
