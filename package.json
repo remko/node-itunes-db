@@ -1,6 +1,6 @@
 {
   "name": "itunes-db",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Fast iTunes XML parser",
   "main": "index.js",
   "author": "Remko Tronçon <remko@el-tramo.be> (https://el-tramo.be/)",
