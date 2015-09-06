@@ -5,20 +5,21 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <nan.h>
 
 using namespace v8;
 
 namespace {
 	class Parser {
 		public:
-			Parser(Isolate* isolate, Local<Object>& library, Local<Array>& tracks, Local<Array>& playlists) : 
-				isolate(isolate), library(library), tracks(tracks), playlists(playlists),
+			Parser(Local<Object>& library, Local<Array>& tracks, Local<Array>& playlists) : 
+				library(library), tracks(tracks), playlists(playlists),
 				level(0), inMediaDir(false), inTracks(false) {
 			}
 
 			void handleStartElement(const std::string&) {
 				if (inPlaylists && level == 3) {
-					currentPlaylistTracks = Array::New(isolate);
+					currentPlaylistTracks = Nan::New<Array>();
 				}
 
 				level++;
@@ -29,7 +30,7 @@ namespace {
 				level--;
 				if (level == 2) {
 					if (inMediaDir && tag != "key") {
-						library->Set(String::NewFromUtf8(isolate, "mediaDir"), String::NewFromUtf8(isolate, lastText.c_str()));
+						Nan::Set(library, Nan::New("mediaDir").ToLocalChecked(), Nan::New(lastText).ToLocalChecked());
 					}
 					inTracks = tag == "key" && lastText == "Tracks";
 					inPlaylists = tag == "key" && lastText == "Playlists";
@@ -57,11 +58,11 @@ namespace {
 								exit(-1);
 							}
 
-							Local<Object> track = Object::New(isolate);
+							Local<Object> track = Nan::New<Object>();
 							for (DataMap::const_iterator i = data.begin(); i != data.end(); ++i) {
-								track->Set(String::NewFromUtf8(isolate, i->first.c_str()), i->second);
+								Nan::Set(track, Nan::New(i->first).ToLocalChecked(), i->second);
 							}
-							tracks->Set(tracks->Length(), track);
+							Nan::Set(tracks, tracks->Length(), track);
 
 							tracksByID[currentTrackID] = track;
 
@@ -77,7 +78,7 @@ namespace {
 								std::cerr << "Unable to find track " << lastText << std::endl;
 								exit(-1);
 							}
-							currentPlaylistTracks->Set(currentPlaylistTracks->Length(), i->second);
+							Nan::Set(currentPlaylistTracks, currentPlaylistTracks->Length(), i->second);
 						}
 					}
 					else if (level == 4) {
@@ -90,12 +91,12 @@ namespace {
 					}
 					else if (level == 3) {
 						if (data.size()) {
-							Local<Object> playlist = Object::New(isolate);
+							Local<Object> playlist = Nan::New<Object>();
 							for (DataMap::const_iterator i = data.begin(); i != data.end(); ++i) {
-								playlist->Set(String::NewFromUtf8(isolate, i->first.c_str()), i->second);
+								Nan::Set(playlist, Nan::New(i->first).ToLocalChecked(), i->second);
 							}
-							playlist->Set(String::NewFromUtf8(isolate, "items"), currentPlaylistTracks);
-							playlists->Set(playlists->Length(), playlist);
+							Nan::Set(playlist, Nan::New("items").ToLocalChecked(), currentPlaylistTracks);
+							Nan::Set(playlists, playlists->Length(), playlist);
 							data.clear();
 						}
 					}
@@ -110,24 +111,30 @@ namespace {
 		private:
 			Local<Value> createValue(const std::string& type, const std::string& value) {
 				if (type == "integer") {
-					return Number::New(isolate, strtoull(value.c_str(), 0, 10));
+					return Nan::New<Number>(strtoull(value.c_str(), 0, 10));
 				}
 				else if (type == "true") {
-					return Boolean::New(isolate, true);
+					return Nan::True();
 				}
 				else if (type == "false") {
-					return Boolean::New(isolate, false);
+					return Nan::False();
 				}
 				else if (type == "data") {
-					return node::Buffer::New(isolate, String::NewFromUtf8(isolate, value.c_str()), node::BASE64);
+					Local<Value> data = Nan::New(value).ToLocalChecked();
+					ssize_t bytes = Nan::DecodeBytes(data, Nan::BASE64);
+					if (bytes < 0) {
+						return Nan::New(value).ToLocalChecked();
+					}
+					char* buffer = new char[bytes];
+					Nan::DecodeWrite(buffer, bytes, data, Nan::BASE64);
+					return Nan::NewBuffer(buffer, bytes).ToLocalChecked();
 				}
 				else {
-					return String::NewFromUtf8(isolate, value.c_str());
+					return Nan::New(value).ToLocalChecked();
 				}
 			}
 		
 		private:
-			Isolate* isolate;
 			Local<Object>& library;
 			Local<Array>& tracks;
 			Local<Array>& playlists;
@@ -177,31 +184,28 @@ static void handleWarning(void*, const char*, ... ) {
 }
 
 
-void load(const FunctionCallbackInfo<Value>& args) {
-	Isolate* isolate = Isolate::GetCurrent();
-	HandleScope scope(isolate);
-
-	if (args.Length() < 1) {
-		isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+NAN_METHOD(load) {
+	if (info.Length() < 1) {
+		Nan::ThrowTypeError("Wrong number of arguments");
 		return;
 	}
 
-	if (!args[0]->IsString()) {
-		isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+	if (!info[0]->IsString()) {
+		Nan::ThrowTypeError("Wrong arguments");
 		return;
 	}
 
-	std::string db(*v8::String::Utf8Value(args[0]->ToString()));
+	std::string db(*v8::String::Utf8Value(info[0]->ToString()));
 
-	Local<Object> library = Object::New(isolate);
+	Local<Object> library = Nan::New<Object>();
 
-	Local<Array> tracks = Array::New(isolate);
-	library->Set(String::NewFromUtf8(isolate, "tracks"), tracks);
+	Local<Array> tracks = Nan::New<Array>();
+	Nan::Set(library, Nan::New("tracks").ToLocalChecked(), tracks);
 
-	Local<Array> playlists = Array::New(isolate);
-	library->Set(String::NewFromUtf8(isolate, "playlists"), playlists);
+	Local<Array> playlists = Nan::New<Array>();
+	Nan::Set(library, Nan::New("playlists").ToLocalChecked(), playlists);
 
-	Parser parser(isolate, library, tracks, playlists);
+	Parser parser(library, tracks, playlists);
 	xmlInitParser();
 	xmlSAXHandler handler;
 	memset(&handler, 0, sizeof(handler));
@@ -212,16 +216,16 @@ void load(const FunctionCallbackInfo<Value>& args) {
 	handler.warning = &handleWarning;
 	handler.error = &handleError;
 	if (xmlSAXUserParseFile(&handler, &parser, db.c_str()) != XML_ERR_OK) {
-		isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Parse error")));
+		Nan::ThrowError("Parse error");
 		return;
 	}
 
-	// args.GetReturnValue().Set(String::NewFromUtf8(isolate, "world"));
-	args.GetReturnValue().Set(library);
+	info.GetReturnValue().Set(library);
 }
 
-void init(Handle<Object> exports) {
-	NODE_SET_METHOD(exports, "load", load);
+NAN_MODULE_INIT(InitAll) {
+	Nan::Set(target, Nan::New<String>("load").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<FunctionTemplate>(load)).ToLocalChecked());
 }
 
-NODE_MODULE(addon, init)
+NODE_MODULE(itunes_db, InitAll)

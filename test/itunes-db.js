@@ -4,6 +4,7 @@ var test = require("tape");
 
 test("loadSync", function (t) {
 	var db = itunesDB.loadSync(path.join(__dirname, "testdb.xml"));
+	// console.log(db);
 
 	t.equal(db.tracks.length, 2);
 
