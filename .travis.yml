@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-- "0.10"
-- "0.12"
+- node
+- lts/*
 before_script: npm install coveralls
 script: make COVERAGE=1 check
 after_script:
